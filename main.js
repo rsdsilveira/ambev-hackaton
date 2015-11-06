@@ -29,7 +29,8 @@ stmt.getAsObject({$start:1, $end:1}); // {col1:1, col2:111}
 // Bind new values
 stmt.bind({$start:1, $end:2});
 while(stmt.step()) { //
-    var row = stmt.getAsObject();
+    var row = stmt.get();
+    console.log("row:" + row );
     console.log("row[0]:" + row[0]);
     console.log("row[1]:" + row[1]);
 
