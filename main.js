@@ -30,7 +30,8 @@ stmt.getAsObject({$start:1, $end:1}); // {col1:1, col2:111}
 stmt.bind({$start:1, $end:2});
 while(stmt.step()) { //
     var row = stmt.getAsObject();
-    console.log("row:" + row);
-    console.log("row.toString()" + row.toString());
+    console.log("row[0]:" + row[0]);
+    console.log("row[1]:" + row[1]);
+
     // [...] do something with the row of result
 }
