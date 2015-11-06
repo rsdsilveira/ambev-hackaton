@@ -1,5 +1,6 @@
 // Load the http module to create an http server.
 var http = require('http');
+var sql = require('sql.js');
 
 // Configure our HTTP server to respond with Hello World to all requests.
 var server = http.createServer(function (request, response) {
@@ -15,7 +16,7 @@ console.log("Server running at http://127.0.0.1:8000/");
 
 
 
-var db = new SQL.Database();
+var db = new sql.Database();
 // Run a query without reading the results
 db.run("CREATE TABLE test (col1, col2);");
 // Insert two rows: (1,111) and (2,222)
