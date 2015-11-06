@@ -1,6 +1,7 @@
 // Load the http module to create an http server.
 var http = require('http');
 var sql = require('sql.js');
+var fs = require('fs');
 
 // Configure our HTTP server to respond with Hello World to all requests.
 var server = http.createServer(function (request, response) {
@@ -15,10 +16,12 @@ server.listen(8000);
 console.log("Server running at http://127.0.0.1:8000/");
 
 
-
-var db = new sql.Database();
+// Load the db from file
+var dbFileName = 'db.sqlite';
+var filebuffer = fs.readFileSync(dbFileName);
+var db = new SQL.Database(filebuffer);
 // Run a query without reading the results
-db.run("CREATE TABLE test (col1, col2);");
+db.run("CREATE TABLE IF NOT EXISTS test (col1, col2);");
 // Insert two rows: (1,111) and (2,222)
 db.run("INSERT INTO test VALUES (?,?), (?,?)", [1,111,2,222]);
 
@@ -31,5 +34,8 @@ stmt.bind({$start:1, $end:2});
 while(stmt.step()) { //
     var row = stmt.get();
     console.log("row[0]:" + row[0] + "   row[1]:" + row[1]);
-
 }
+
+var data = db.export();
+var buffer = new Buffer(data);
+fs.writeFileSync(dbFileName, buffer);
