@@ -3,17 +3,32 @@ var http = require('http');
 var sql = require('sql.js');
 var fs = require('fs');
 
-// Configure our HTTP server to respond with Hello World to all requests.
-var server = http.createServer(function (request, response) {
-  response.writeHead(200, {"Content-Type": "text/plain"});
-  response.end("Hello kanashiro\n");
+var express = require("express");
+var app = express();
+var airgateHistory = [];
+var signalLevel = "";
+
+app.get("/", function(req, res) {
+	res.sendfile('index.html')
 });
 
-// Listen on port 8000, IP defaults to 127.0.0.1
-server.listen(8000);
+app.get("/api/stub", function(req, res) { 
+	res.setHeader('Content-Type', 'application/json');
+	stubReturn = {"param1":"value1", "param2":"value2"};
+	res.send(JSON.stringify(stubReturn));
+});
 
-// Put a friendly message on the terminal
-console.log("Server running at http://127.0.0.1:8000/");
+
+ /* serves all the static files */
+ app.get(/^(.+)$/, function(req, res){ 
+     console.log('static file request : ' + req.params);
+     res.sendfile( __dirname + req.params[0]); 
+ });
+
+ var port = process.env.PORT || 3000;
+ app.listen(port, function() {
+   console.log("Listening on " + port);
+ });
 
 
 // Load the db from file
