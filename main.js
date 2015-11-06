@@ -25,7 +25,7 @@ app.get("/api/stub", function(req, res) {
      res.sendfile( __dirname + req.params[0]); 
  });
 
- var port = 3000;
+ var port = 8000;
  app.listen(port, function() {
    console.log("Listening on " + port);
  });
